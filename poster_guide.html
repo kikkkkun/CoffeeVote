@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>CoffeeVote 使い方ガイド</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    background: #fff;
+    color: #222;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 12mm 14mm 10mm;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  /* ── ヘッダー ── */
+  .header {
+    background: linear-gradient(135deg, #3e2723 0%, #6d4c41 100%);
+    color: #fff;
+    border-radius: 10px;
+    padding: 14px 20px 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .header-icon { font-size: 42px; line-height: 1; }
+  .header-text { flex: 1; }
+  .header-title { font-size: 28px; font-weight: 900; letter-spacing: 2px; }
+  .header-sub   { font-size: 12px; margin-top: 2px; opacity: 0.85; }
+  .header-badge {
+    background: #ffcc02;
+    color: #3e2723;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* ── タグライン ── */
+  .tagline {
+    text-align: center;
+    font-size: 13px;
+    color: #5d4037;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 0;
+  }
+
+  /* ── セクション ── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: #5d4037;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* ── ルール帯 ── */
+  .rule-strip {
+    background: #fdf3e7;
+    border: 2px solid #d7a96b;
+    border-radius: 8px;
+    padding: 8px 12px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rule-strip-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .rule-strip .rule-item {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .rule-num {
+    font-size: 22px;
+    font-weight: 900;
+    color: #bf360c;
+  }
+  .rule-unit { font-size: 12px; color: #5d4037; }
+  .rule-divider { width: 1px; height: 30px; background: #d7a96b; flex-shrink: 0; }
+  .rule-note { font-size: 11px; color: #6d4c41; line-height: 1.5; border-top: 1px dashed #d7a96b; padding-top: 5px; }
+
+  /* ── フロー ── */
+  .flow-grid {
+    display: flex;
+    gap: 6px;
+  }
+  .flow-box {
+    flex: 1;
+    border: 1.5px solid #bcaaa4;
+    border-radius: 8px;
+    padding: 8px 8px 7px;
+    text-align: center;
+    background: #fff;
+    position: relative;
+  }
+  .flow-box.highlight {
+    border-color: #6d4c41;
+    background: #fdf3e7;
+  }
+  .flow-num {
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+    background: #6d4c41;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 5px;
+  }
+  .flow-icon { font-size: 22px; line-height: 1; margin-bottom: 4px; }
+  .flow-label { font-size: 11px; font-weight: 700; color: #3e2723; margin-bottom: 3px; }
+  .flow-desc  { font-size: 9.5px; color: #6d4c41; line-height: 1.45; }
+  .flow-arrow {
+    display: flex; align-items: center;
+    font-size: 18px; color: #bcaaa4;
+    padding-top: 10px;
+  }
+
+  /* ── 支払い方法 ── */
+  .payment-box {
+    background: #e8f5e9;
+    border: 1.5px solid #81c784;
+    border-radius: 8px;
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .payment-box .p-icon { font-size: 28px; flex-shrink: 0; }
+  .payment-box .p-main { flex: 1; }
+  .payment-box .p-title { font-size: 13px; font-weight: 700; color: #1b5e20; margin-bottom: 3px; }
+  .payment-box .p-desc  { font-size: 10px; color: #388e3c; line-height: 1.5; }
+  .payment-box .p-steps { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+  .payment-box .p-step  { font-size: 9.5px; background: #fff; border: 1px solid #a5d6a7; border-radius: 4px; padding: 2px 7px; color: #2e7d32; white-space: nowrap; }
+
+  /* ── 状態バッジ ── */
+  .states {
+    display: flex;
+    gap: 5px;
+  }
+  .state-box {
+    flex: 1;
+    border-radius: 7px;
+    padding: 7px 8px;
+    text-align: center;
+  }
+  .state-box .s-icon { font-size: 18px; }
+  .state-box .s-name { font-size: 10px; font-weight: 700; margin: 2px 0; }
+  .state-box .s-desc { font-size: 9px; line-height: 1.4; }
+  .state-voting   { background:#e3f2fd; border:1.5px solid #90caf9; color:#0d47a1; }
+  .state-sprint   { background:#fff3e0; border:1.5px solid #ffb74d; color:#e65100; }
+  .state-done     { background:#e8f5e9; border:1.5px solid #81c784; color:#1b5e20; }
+  .state-fail     { background:#fce4ec; border:1.5px solid #f48fb1; color:#880e4f; }
+
+
+  /* ── 管理者 ── */
+  .admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .admin-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 6px 8px;
+  }
+  .admin-item .a-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+  .admin-item .a-label { font-size: 10px; font-weight: 700; color: #3e2723; }
+  .admin-item .a-desc  { font-size: 9px; color: #757575; line-height: 1.35; }
+
+  /* ── フッター ── */
+  .footer {
+    background: #efebe9;
+    border-radius: 8px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+  }
+  .footer-icon { font-size: 22px; }
+  .footer-text { font-size: 9.5px; color: #5d4037; line-height: 1.6; flex: 1; }
+  .footer-contact { text-align: right; font-size: 9px; color: #8d6e63; }
+
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { padding: 12mm 14mm 10mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <div class="header-icon">☕</div>
+    <div class="header-text">
+      <div class="header-title">CoffeeVote</div>
+      <div class="header-sub">みんなで投票して、次のコーヒー豆を決めよう！</div>
+    </div>
+    <div class="header-badge">使い方ガイド</div>
+  </div>
+
+  <!-- タグライン -->
+  <div class="tagline">📦 好みの豆にPayPayで投票して、いちばん多く集まった豆を購入します</div>
+
+  <!-- ルール -->
+  <div>
+    <div class="section-title">💡 基本ルール</div>
+    <div class="rule-strip">
+      <div class="rule-strip-row">
+        <div class="rule-item">
+          <span style="font-size:13px;font-weight:700;color:#5d4037">好きな金額を</span>
+          <span class="rule-num" style="margin-left:4px">PayPay</span>
+          <span class="rule-unit">で直接投票</span>
+        </div>
+        <div class="rule-divider"></div>
+        <div class="rule-item">
+          <span style="font-size:13px;font-weight:700;color:#bf360c">目標</span>
+          <span style="margin:0 4px;font-size:14px;color:#5d4037">合計</span>
+          <span class="rule-num">3,200</span>
+          <span class="rule-unit">円</span>
+          <span style="font-size:11px;color:#5d4037;margin-left:2px">（約500g・20杯分）</span>
+        </div>
+        <div class="rule-divider"></div>
+        <div class="rule-item">
+          <span style="font-size:13px;font-weight:700;color:#bf360c">クリアライン</span>
+          <span style="margin:0 4px;font-size:14px;color:#5d4037">合計</span>
+          <span class="rule-num">2,500</span>
+          <span class="rule-unit">円</span>
+          <span style="font-size:12px;color:#5d4037;margin-left:2px">以上で成立</span>
+        </div>
+      </div>
+      <div class="rule-note">
+        💡 余った資金は<strong>次回スタートボーナス</strong>として繰越。個人への返金はありません。
+      </div>
+    </div>
+  </div>
+
+  <!-- 支払い方法 -->
+  <div>
+    <div class="section-title">💴 支払い方法</div>
+    <div class="payment-box">
+      <div class="p-icon">📱</div>
+      <div class="p-main">
+        <div class="p-title">投票時にPayPayでその場で支払います</div>
+        <div class="p-desc">1円単位で好きな金額を投票できます。M5StackにQRコードが表示されるのでスキャンして支払ってください。</div>
+        <div class="p-steps">
+          <div class="p-step">① 豆と金額を選ぶ</div>
+          <div class="p-step">② QRコードをスキャン</div>
+          <div class="p-step">③ PayPayで支払い</div>
+          <div class="p-step">④ 投票完了！</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 投票手順 -->
+  <div>
+    <div class="section-title">🗳️ 投票のしかた</div>
+    <div class="flow-grid">
+      <div class="flow-box highlight">
+        <div class="flow-num">1</div>
+        <div class="flow-icon">👤</div>
+        <div class="flow-label">ユーザー選択</div>
+        <div class="flow-desc">VOTEを押して<br>自分の名前を選ぶ</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-box highlight">
+        <div class="flow-num">2</div>
+        <div class="flow-icon">☕</div>
+        <div class="flow-label">豆を選ぶ</div>
+        <div class="flow-desc">候補豆から<br>1つ選択</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-box highlight">
+        <div class="flow-num">3</div>
+        <div class="flow-icon">📱</div>
+        <div class="flow-label">金額を入力</div>
+        <div class="flow-desc">PayPayで払う<br>金額（円）を入力</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-box highlight">
+        <div class="flow-num">4</div>
+        <div class="flow-icon">✔️</div>
+        <div class="flow-label">確認・完了</div>
+        <div class="flow-desc">内容を確認して<br>投票ボタンを押す</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ラウンド状態 -->
+  <div>
+    <div class="section-title">🔄 ラウンドの状態</div>
+    <div class="states">
+      <div class="state-box state-voting">
+        <div class="s-icon">🗳️</div>
+        <div class="s-name">VOTING</div>
+        <div class="s-desc">投票受付中<br>現金で投票しよう</div>
+      </div>
+      <div class="state-box state-sprint">
+        <div class="s-icon">🏃</div>
+        <div class="s-name">LAST SPRINT</div>
+        <div class="s-desc">追加募集中<br>あと少しで成立！</div>
+      </div>
+      <div class="state-box state-done">
+        <div class="s-icon">🎉</div>
+        <div class="s-name">FINALIZED</div>
+        <div class="s-desc">購入確定！<br>豆が届くのを待とう</div>
+      </div>
+      <div class="state-box state-fail">
+        <div class="s-icon">😢</div>
+        <div class="s-name">FAILED</div>
+        <div class="s-desc">不成立<br>投票分は全額返金</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 管理者操作（簡略） -->
+  <div>
+    <div class="section-title">🔐 管理者向け操作（PIN: 管理者に確認）</div>
+    <div class="admin-grid">
+      <div class="admin-item">
+        <div class="a-icon">🔒</div>
+        <div>
+          <div class="a-label">Close Voting — 投票を締める</div>
+          <div class="a-desc">締切日時を過ぎたら実行。以降投票不可。</div>
+        </div>
+      </div>
+      <div class="admin-item">
+        <div class="a-icon">🏃</div>
+        <div>
+          <div class="a-label">Last Sprint — 追加募集</div>
+          <div class="a-desc">資金が足りないときに追加投票を募る。</div>
+        </div>
+      </div>
+      <div class="admin-item">
+        <div class="a-icon">✅</div>
+        <div>
+          <div class="a-label">Finalize — 購入確定</div>
+          <div class="a-desc">1位の豆を購入確定。CSV自動出力。</div>
+        </div>
+      </div>
+      <div class="admin-item">
+        <div class="a-icon">❌</div>
+        <div>
+          <div class="a-label">Set Failed — 不成立処理</div>
+          <div class="a-desc">購入見送り。投票分は全員に返金。</div>
+        </div>
+      </div>
+      <div class="admin-item">
+        <div class="a-icon">↩️</div>
+        <div>
+          <div class="a-label">Cancel Vote — 投票取消</div>
+          <div class="a-desc">誤投票の修正。PayPayは管理者が返金対応。</div>
+        </div>
+      </div>
+      <div class="admin-item">
+        <div class="a-icon">📁</div>
+        <div>
+          <div class="a-label">Export CSV — データ出力</div>
+          <div class="a-desc">集計データをSDカードに書き出す。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <div class="footer">
+    <div class="footer-icon">❓</div>
+    <div class="footer-text">
+      <strong>困ったときは</strong>：SDカードを抜き差し ／ 電源を入れ直す ／ 管理者に相談<br>
+      投票記録がおかしい場合も管理者に連絡してください。データは復元できます。
+    </div>
+    <div class="footer-contact">
+      画面下部表示の見方<br>
+      <strong>SD:OK</strong> = 正常 　<strong>T:RTC</strong> = 時刻OK<br>
+      <strong>WiFi:ON</strong> = ネット接続中
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
