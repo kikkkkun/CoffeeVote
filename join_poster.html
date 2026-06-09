@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>CoffeeVote 参加募集ポスター</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    background: #f0ebe4;
+    color: #222;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 20px auto;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── 上部カラー帯 ── */
+  .top-band {
+    background: linear-gradient(150deg, #2c1810 0%, #5d3520 55%, #8b5e3c 100%);
+    color: #fff;
+    padding: 20mm 14mm 16mm;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .top-band::before {
+    content: '☕';
+    position: absolute;
+    font-size: 260px;
+    opacity: .05;
+    right: -20px;
+    top: -30px;
+    line-height: 1;
+  }
+
+  .campaign-tag {
+    display: inline-block;
+    background: #dc2626;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .main-title {
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .main-title .accent { color: #fde68a; }
+
+  .sub-title {
+    font-size: 13px;
+    opacity: .82;
+    letter-spacing: 1px;
+  }
+
+  /* ── ボーナスカード ── */
+  .bonus-card {
+    background: #fff;
+    margin: -12mm 14mm 0;
+    border-radius: 14px;
+    padding: 10mm 12mm 8mm;
+    box-shadow: 0 6px 28px rgba(62,39,35,.18);
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12mm;
+  }
+  .bonus-left {
+    flex: 1;
+    border-right: 2px dashed #e5c9a8;
+    padding-right: 10mm;
+  }
+  .bonus-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #999;
+    margin-bottom: 4px;
+  }
+  .bonus-amount {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .b-plus { font-size: 24px; font-weight: 900; color: #b5541c; padding-bottom: 8px; }
+  .b-num  { font-size: 72px; font-weight: 900; color: #b5541c; letter-spacing: -2px; }
+  .b-yen  { font-size: 28px; font-weight: 900; color: #b5541c; padding-bottom: 10px; }
+  .bonus-caption { font-size: 13px; font-weight: 700; color: #3e2723; }
+
+  .bonus-right { flex: 1; text-align: left; }
+  .bonus-right .point { font-size: 12px; font-weight: 700; color: #3e2723; margin-bottom: 5px; display: flex; align-items: flex-start; gap: 6px; }
+  .bonus-right .point::before { content: '✓'; color: #b5541c; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .bonus-right .point-note { font-size: 10px; color: #888; margin-top: 8px; line-height: 1.5; border-top: 1px dashed #e5c9a8; padding-top: 8px; }
+
+  /* ── メインコンテンツ ── */
+  .content {
+    padding: 10mm 14mm 8mm;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 7mm;
+  }
+
+  .section-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #fff;
+    background: #5d4037;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+
+  /* ── 参加ステップ ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5mm;
+  }
+  .step-box {
+    background: #fdf3e7;
+    border-radius: 10px;
+    padding: 7px 8px 8px;
+    text-align: center;
+    border-top: 3px solid #d7a96b;
+  }
+  .step-num {
+    width: 22px; height: 22px;
+    background: #3e2723; color: #fff;
+    border-radius: 50%;
+    font-size: 11px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 5px;
+  }
+  .step-icon  { font-size: 22px; margin-bottom: 4px; }
+  .step-title { font-size: 11px; font-weight: 700; color: #3e2723; margin-bottom: 3px; }
+  .step-desc  { font-size: 9px; color: #6d4c41; line-height: 1.5; }
+
+  /* ── 特徴リスト ── */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm 6mm;
+  }
+  .feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    background: #f8f4f0;
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  .feat-icon { font-size: 18px; flex-shrink: 0; }
+  .feat-text h4 { font-size: 11px; font-weight: 700; color: #3e2723; margin-bottom: 2px; }
+  .feat-text p  { font-size: 9.5px; color: #6d4c41; line-height: 1.5; }
+
+  /* ── QR / 参加方法 ── */
+  .join-box {
+    background: #3e2723;
+    border-radius: 12px;
+    padding: 8mm 10mm;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10mm;
+  }
+  .join-qr-area {
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .qr-placeholder {
+    width: 26mm; height: 26mm;
+    background: #fff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #999;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .qr-caption { font-size: 8px; color: rgba(255,255,255,.6); margin-top: 4px; }
+
+  .join-text h3 { font-size: 15px; font-weight: 900; margin-bottom: 5px; letter-spacing: 1px; }
+  .join-steps { display: flex; flex-direction: column; gap: 4px; }
+  .join-step {
+    font-size: 11px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .join-step-num {
+    background: #b5541c;
+    color: #fff;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    font-size: 9px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── フッター ── */
+  .footer {
+    background: #2c1810;
+    color: rgba(255,255,255,.7);
+    padding: 5mm 14mm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10mm;
+  }
+  .footer-logo { font-size: 16px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 6px; }
+  .footer-url  { font-size: 9px; color: rgba(255,255,255,.5); margin-top: 2px; }
+  .footer-note { font-size: 9px; color: rgba(255,255,255,.5); line-height: 1.5; }
+  .footer-contact {
+    background: rgba(255,255,255,.08);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 10px;
+    text-align: center;
+    color: rgba(255,255,255,.8);
+    white-space: nowrap;
+  }
+  .footer-contact strong { color: #fde68a; font-size: 13px; display: block; }
+
+  /* ── 印刷設定 ── */
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; }
+    @page { size: A4; margin: 0; }
+  }
+
+  /* ── 画面プレビュー用 ── */
+  @media screen {
+    body { padding: 20px; }
+    .page { box-shadow: 0 4px 32px rgba(0,0,0,.2); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 上部カラー帯 -->
+  <div class="top-band">
+    <div class="campaign-tag">🎁 初回参加キャンペーン実施中</div>
+    <div class="main-title">みんなで選ぼう、<br><span class="accent">次のコーヒー豆。</span></div>
+    <div class="sub-title">好きな豆に投票して、いちばん票を集めた豆をみんなで共同購入！</div>
+  </div>
+
+  <!-- ボーナスカード -->
+  <div class="bonus-card">
+    <div class="bonus-left">
+      <div class="bonus-label">🎁 初回参加ボーナス</div>
+      <div class="bonus-amount">
+        <span class="b-plus">+</span>
+        <span class="b-num">160</span>
+        <span class="b-yen">円</span>
+      </div>
+      <div class="bonus-caption">参加するだけでプレゼント！</div>
+    </div>
+    <div class="bonus-right">
+      <div class="point">自分のお金を出さずに最初の1票が投じられます</div>
+      <div class="point">160円 = PayPay で使える実費と同等</div>
+      <div class="point">登録費用・月額費用は一切なし</div>
+      <div class="point-note">※ ボーナスは初回参加時のみ付与。管理者に登録してもらった時点で有効になります。</div>
+    </div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div class="content">
+
+    <!-- 参加ステップ -->
+    <div>
+      <div class="section-label">🚀 参加手順</div>
+      <div class="steps-grid">
+        <div class="step-box">
+          <div class="step-num">1</div>
+          <div class="step-icon">🙋</div>
+          <div class="step-title">声をかける</div>
+          <div class="step-desc">管理者に「参加したい」と伝えるだけ</div>
+        </div>
+        <div class="step-box">
+          <div class="step-num">2</div>
+          <div class="step-icon">🎁</div>
+          <div class="step-title">ボーナス付与</div>
+          <div class="step-desc">160円分が即座にもらえる</div>
+        </div>
+        <div class="step-box">
+          <div class="step-num">3</div>
+          <div class="step-icon">📱</div>
+          <div class="step-title">豆に投票</div>
+          <div class="step-desc">M5Stack で選んでPayPayで支払い</div>
+        </div>
+        <div class="step-box">
+          <div class="step-num">4</div>
+          <div class="step-icon">☕</div>
+          <div class="step-title">豆が届く</div>
+          <div class="step-desc">最多票の豆をみんなで楽しむ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 特徴 -->
+    <div>
+      <div class="section-label">💡 こんなシステムです</div>
+      <div class="features">
+        <div class="feat">
+          <div class="feat-icon">🗳️</div>
+          <div class="feat-text">
+            <h4>好きな豆に好きな金額を投票</h4>
+            <p>1円単位で投票可能。強制金額なし。</p>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">🎯</div>
+          <div class="feat-text">
+            <h4>目標額に達したら成立</h4>
+            <p>合計2,500円以上で購入確定。未達なら全額返金。</p>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">♻️</div>
+          <div class="feat-text">
+            <h4>余剰金は次回に繰越</h4>
+            <p>払いすぎた分はみんなの次回ボーナスに。</p>
+          </div>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">📊</div>
+          <div class="feat-text">
+            <h4>リアルタイムランキング</h4>
+            <p>今どの豆がリードしているか一目でわかる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 参加方法 / QR -->
+    <div class="join-box">
+      <div class="join-qr-area">
+        <div class="qr-placeholder">参加ページ<br>QRコード<br>（差替）</div>
+        <div class="qr-caption">スマホで読み取り</div>
+      </div>
+      <div class="join-text">
+        <h3>☕ 参加方法</h3>
+        <div class="join-steps">
+          <div class="join-step"><div class="join-step-num">1</div>QRコードを読み取るか、管理者に声をかける</div>
+          <div class="join-step"><div class="join-step-num">2</div>名前を登録してもらう（無料・1分で完了）</div>
+          <div class="join-step"><div class="join-step-num">3</div>160円ボーナスをもらって投票スタート！</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- フッター -->
+  <div class="footer">
+    <div>
+      <div class="footer-logo">☕ CoffeeVote</div>
+      <div class="footer-url">kikkkkun.github.io/CoffeeVote/join.html</div>
+    </div>
+    <div class="footer-note">
+      このシステムはギャンブル・賭けではありません。<br>
+      職場内でコーヒー豆をみんなで選ぶための共同購入の仕組みです。
+    </div>
+    <div class="footer-contact">
+      <strong>管理者</strong>
+      お気軽にどうぞ
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
