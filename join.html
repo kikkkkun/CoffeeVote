@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoffeeVote に参加しよう — 初回 +160円ボーナス</title>
+<meta name="description" content="CoffeeVote 初回参加キャンペーン。参加するだけで 160円分のボーナスをプレゼント！職場でコーヒー豆をみんなで選ぼう。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brown-dark:  #3e2723;
+  --brown-mid:   #6d4c41;
+  --brown-light: #d7a96b;
+  --amber:       #b5541c;
+  --cream:       #fdf3e7;
+  --red:         #dc2626;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+  background: #fffbf5;
+  color: #2c1810;
+  line-height: 1.7;
+}
+
+/* ─── Nav ─── */
+nav {
+  background: var(--brown-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 52px;
+}
+.nav-logo { color: #fff; font-weight: 900; font-size: 17px; text-decoration: none; display: flex; align-items: center; gap: 7px; }
+.nav-back { color: rgba(255,255,255,.7); font-size: 12px; text-decoration: none; }
+.nav-back:hover { color: #fff; }
+
+/* ─── Hero ─── */
+.hero {
+  background: linear-gradient(150deg, #1a0e00 0%, var(--brown-dark) 50%, #7c4a1e 100%);
+  color: #fff;
+  padding: 64px 20px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(181,84,28,.3), transparent);
+  pointer-events: none;
+}
+.campaign-ribbon {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--red); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: 1px;
+  padding: 5px 16px; border-radius: 20px;
+  margin-bottom: 22px;
+  animation: pulse 2s ease-in-out infinite;
+  position: relative; z-index: 1;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,.5); }
+  50%      { box-shadow: 0 0 0 8px rgba(220,38,38,0); }
+}
+.hero h1 {
+  font-size: clamp(28px, 7vw, 52px); font-weight: 900; line-height: 1.2;
+  margin-bottom: 12px; position: relative; z-index: 1;
+}
+.hero h1 .highlight { color: #fde68a; }
+.hero-sub {
+  font-size: clamp(13px, 2.5vw, 16px); opacity: .85;
+  max-width: 480px; margin: 0 auto 36px;
+  position: relative; z-index: 1;
+}
+
+/* ─── Bonus Card ─── */
+.bonus-wrap {
+  display: flex; justify-content: center;
+  padding: 0 20px; margin-top: -44px; position: relative; z-index: 10;
+}
+.bonus-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 32px 28px;
+  max-width: 480px; width: 100%;
+  box-shadow: 0 16px 48px rgba(62,39,35,.2);
+  text-align: center;
+}
+.bonus-label-small { font-size: 12px; color: #999; letter-spacing: 1px; margin-bottom: 6px; }
+.bonus-main {
+  display: flex; align-items: flex-end; justify-content: center; gap: 4px;
+  margin-bottom: 6px;
+}
+.bonus-plus { font-size: 32px; font-weight: 900; color: var(--amber); line-height: 1; }
+.bonus-num  { font-size: 80px; font-weight: 900; color: var(--amber); line-height: 1; letter-spacing: -2px; }
+.bonus-yen  { font-size: 32px; font-weight: 900; color: var(--amber); line-height: 1.2; }
+.bonus-caption { font-size: 17px; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+.bonus-note {
+  font-size: 12px; color: #888;
+  background: #f5f5f5; border-radius: 8px; padding: 10px 14px;
+  margin-bottom: 24px; line-height: 1.6;
+}
+.btn-join {
+  display: block; width: 100%;
+  background: var(--amber); color: #fff;
+  padding: 16px; border-radius: 10px;
+  font-size: 16px; font-weight: 900; text-decoration: none;
+  box-shadow: 0 4px 16px rgba(181,84,28,.4);
+  transition: background .2s, transform .1s;
+  letter-spacing: .5px;
+}
+.btn-join:hover { background: #c96020; transform: translateY(-1px); }
+.btn-join-sub { font-size: 11px; opacity: .85; font-weight: 400; display: block; margin-top: 3px; }
+
+/* ─── Steps ─── */
+.steps-section { padding: 60px 20px 48px; }
+.section-head { text-align: center; margin-bottom: 40px; }
+.section-head .label { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--amber); margin-bottom: 8px; }
+.section-head h2 { font-size: clamp(20px, 4vw, 28px); font-weight: 900; color: var(--brown-dark); }
+
+.steps-list { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+.step-row { display: flex; gap: 20px; align-items: flex-start; }
+.step-left { display: flex; flex-direction: column; align-items: center; }
+.step-circle {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--brown-dark); color: #fff;
+  font-size: 18px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-line { width: 2px; flex: 1; background: #e5c9a8; min-height: 28px; margin: 0 auto; }
+.step-content { padding: 8px 0 32px; }
+.step-content h3 { font-size: 16px; font-weight: 700; color: var(--brown-dark); margin-bottom: 5px; }
+.step-content p { font-size: 13px; color: #6d4c41; line-height: 1.65; }
+.step-content .tag {
+  display: inline-block; background: var(--cream); border: 1px solid var(--brown-light);
+  color: var(--brown-mid); font-size: 11px; padding: 2px 10px; border-radius: 20px;
+  margin-top: 6px; font-weight: 700;
+}
+
+/* ─── Why join ─── */
+.why-section { background: var(--cream); padding: 56px 20px; }
+.why-grid { max-width: 640px; margin: 32px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 480px) { .why-grid { grid-template-columns: 1fr; } }
+.why-card {
+  background: #fff; border-radius: 12px; padding: 20px;
+  border-top: 3px solid var(--brown-light);
+}
+.why-icon { font-size: 26px; margin-bottom: 8px; }
+.why-card h3 { font-size: 14px; font-weight: 700; color: var(--brown-dark); margin-bottom: 5px; }
+.why-card p  { font-size: 12px; color: #6d4c41; line-height: 1.65; }
+
+/* ─── FAQ ─── */
+.faq-section { padding: 56px 20px; max-width: 600px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid #e5c9a8; padding: 18px 0; }
+.faq-q { font-size: 14px; font-weight: 700; color: var(--brown-dark); display: flex; gap: 10px; margin-bottom: 8px; }
+.faq-q::before { content: 'Q'; color: var(--amber); font-weight: 900; flex-shrink: 0; }
+.faq-a { font-size: 13px; color: #6d4c41; line-height: 1.7; padding-left: 22px; }
+
+/* ─── Final CTA ─── */
+.final-cta {
+  background: linear-gradient(135deg, var(--brown-dark) 0%, #5d3a2e 100%);
+  color: #fff; padding: 64px 20px; text-align: center;
+}
+.final-cta h2 { font-size: clamp(22px, 5vw, 36px); font-weight: 900; margin-bottom: 12px; }
+.final-cta p { font-size: 14px; opacity: .8; margin-bottom: 28px; }
+.btn-final {
+  display: inline-block;
+  background: #fde68a; color: var(--brown-dark);
+  padding: 16px 40px; border-radius: 10px;
+  font-size: 16px; font-weight: 900; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(253,230,138,.3);
+  transition: transform .15s;
+}
+.btn-final:hover { transform: translateY(-2px); }
+
+/* ─── Footer ─── */
+footer {
+  background: var(--brown-dark); color: rgba(255,255,255,.5);
+  padding: 24px; text-align: center; font-size: 12px;
+}
+footer a { color: rgba(255,255,255,.5); text-decoration: underline; margin: 0 8px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">☕ CoffeeVote</a>
+  <a href="index.html" class="nav-back">← トップに戻る</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="campaign-ribbon">🎁 初回参加キャンペーン実施中</div>
+  <h1>コーヒー選び、<br><span class="highlight">あなたの一票</span>で変わる。</h1>
+  <p class="hero-sub">
+    参加するだけで 160円分のボーナスプレゼント。<br>
+    まず気軽に1票入れてみてください。
+  </p>
+</div>
+
+<!-- Bonus Card -->
+<div class="bonus-wrap">
+  <div class="bonus-card">
+    <div class="bonus-label-small">🎁 初回参加ボーナス</div>
+    <div class="bonus-main">
+      <span class="bonus-plus">+</span>
+      <span class="bonus-num">160</span>
+      <span class="bonus-yen">円</span>
+    </div>
+    <div class="bonus-caption">参加登録するだけでもらえます</div>
+    <div class="bonus-note">
+      ボーナスの 160円はそのまま投票に使えます。<br>
+      自分の財布からお金を出さなくても、まず1票試せます。
+    </div>
+    <a href="poster_guide.html" class="btn-join">
+      使い方を見て参加する
+      <span class="btn-join-sub">管理者に名前を追加してもらうだけ・登録費用なし</span>
+    </a>
+  </div>
+</div>
+
+<!-- How to join -->
+<div class="steps-section">
+  <div class="section-head">
+    <div class="label">HOW TO JOIN</div>
+    <h2>参加方法はとても簡単です</h2>
+  </div>
+  <div class="steps-list">
+    <div class="step-row">
+      <div class="step-left">
+        <div class="step-circle">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <h3>管理者に声をかける</h3>
+        <p>「CoffeeVote に参加したい」と管理者（このページを教えてくれた人）に伝えてください。名前を登録してもらいます。</p>
+        <span class="tag">費用なし · 書類なし</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-left">
+        <div class="step-circle">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <h3>160円ボーナスをもらう</h3>
+        <p>初回登録時に 160円分のボーナスが付与されます。自分でお金を払わなくても最初の1票が投じられます。</p>
+        <span class="tag">初回のみ · 1人1回</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-left">
+        <div class="step-circle">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <h3>好きな豆に投票する</h3>
+        <p>M5Stack デバイスの前に立ち、気になる豆を選んで投票。PayPay でその場で支払い完了です。</p>
+        <span class="tag">1円単位 · いつでも</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-left">
+        <div class="step-circle">4</div>
+      </div>
+      <div class="step-content">
+        <h3>豆が届いたらみんなで楽しむ</h3>
+        <p>目標額に達したら購入確定！あなたが推した豆が次のコーヒーになるかもしれません。</p>
+        <span class="tag">未達なら全額返金</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Why join -->
+<div class="why-section">
+  <div class="section-head">
+    <div class="label">WHY COFFEEVOTE</div>
+    <h2>参加するメリット</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🗳️</div>
+      <h3>豆選びに関われる</h3>
+      <p>「いつも同じ豆だな…」から卒業。自分の好みを反映できます。</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💴</div>
+      <h3>好きな金額だけ出す</h3>
+      <p>強制ではありません。1円〜好きな金額を、好きなタイミングで。</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔄</div>
+      <h3>余剰金は次回に還元</h3>
+      <p>払いすぎた分は無駄になりません。次のラウンドのボーナスに。</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">❌</div>
+      <h3>不成立なら返金</h3>
+      <p>目標に届かなかったラウンドは、投票した全額が戻ってきます。</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="section-head">
+    <div class="label">FAQ</div>
+    <h2>よくある質問</h2>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">参加に費用はかかりますか？</div>
+    <div class="faq-a">参加登録自体は無料です。投票するときに PayPay で払う金額のみが実費になります。払わなければ投票はできませんが、初回ボーナスの 160円だけで様子を見ることもできます。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">PayPay を持っていないと参加できませんか？</div>
+    <div class="faq-a">現状は PayPay での支払いが前提となっています。管理者に相談していただければ別途対応できる場合があります。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">投票した豆が選ばれなかったらどうなりますか？</div>
+    <div class="faq-a">投票したポイント（円）は消費されます（選ばれた豆の購入資金として使われます）。ただし全体が不成立の場合は全額返金されます。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">途中でやめることはできますか？</div>
+    <div class="faq-a">いつでも参加をやめられます。ラウンドが進行中の場合は、投票済みのポイントのキャンセルは管理者に相談してください。</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">160円ボーナスはいつ使えますか？</div>
+    <div class="faq-a">管理者が名前を登録した時点でボーナスが付与されます。次のラウンド開始時からすぐに使えます。</div>
+  </div>
+</div>
+
+<!-- Final CTA -->
+<div class="final-cta">
+  <h2>☕ 次のコーヒー、<br>あなたも選んでみませんか？</h2>
+  <p>まずは管理者に「参加したい」と伝えるだけでOKです。</p>
+  <a href="poster_guide.html" class="btn-final">使い方ガイドを見る</a>
+</div>
+
+<footer>
+  <a href="index.html">CoffeeVote トップ</a>
+  <a href="poster_guide.html">使い方ガイド</a>
+  <a href="/static/tokushoho.html">特定商取引法に基づく表記</a>
+  <p style="margin-top:12px">© 2026 CoffeeVote</p>
+</footer>
+
+</body>
+</html>
