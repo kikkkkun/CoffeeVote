@@ -295,7 +295,7 @@ html.js .reveal.on {
   margin-bottom: 18px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
 .hs-step h3 { font-size: 34px; font-weight: 900; color: var(--brown-dark); line-height: 1.3; }
 .hs-step p  { font-size: 16px; color: #6d4c41; margin-top: 12px; line-height: 1.8; }
-.hs-label { position: absolute; top: 9vh; left: 50%; transform: translateX(-50%);
+.hs-label { position: absolute; top: calc(56px + 3.5vh); left: 50%; transform: translateX(-50%);
   text-align: center; width: 100%; padding: 0 20px; }
 .hs-dots { position: absolute; bottom: 6vh; left: 50%; transform: translateX(-50%);
   display: flex; gap: 10px; }
@@ -335,11 +335,11 @@ html.js .reveal.on {
   justify-content: center; font-size: 16px; font-weight: 700; }
 .hs-pad .ok { background: var(--green); color: #fff; }
 .hs-qr { background: #fff; flex: 1; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; gap: 8px; color: #222; }
-.hs-qrbox { display: grid; grid-template-columns: repeat(25, 5.5px); grid-auto-rows: 5.5px; }
-.hs-qrbox i.b { background: #111; }
-.hs-qr .amt { font-size: 19px; font-weight: 900; color: var(--amber); }
-.hs-qr .cap { font-size: 12.5px; font-weight: 700; }
+  justify-content: center; gap: 6px; color: #222; padding: 8px 10px; min-height: 0; }
+.hs-qrbox { width: 42%; max-width: 168px; aspect-ratio: 1; flex-shrink: 1; min-height: 0; }
+.hs-qrbox svg { display: block; width: 100%; height: 100%; shape-rendering: crispEdges; }
+.hs-qr .amt { font-size: 18px; font-weight: 900; color: var(--amber); }
+.hs-qr .cap { font-size: 12px; font-weight: 700; text-align: center; }
 @media (max-width: 760px) {
   .hs-grid { flex-direction: column; gap: 22px; padding: 0 22px; }
   .hs-device { width: min(400px, 88vw); }
@@ -348,6 +348,24 @@ html.js .reveal.on {
   .hs-step h3 { font-size: 24px; }
   .hs-step p { font-size: 13.5px; margin-top: 6px; }
 }
+
+/* ═══════════ Movie ═══════════ */
+.movie-bg { background: var(--brown-dark); color: #fff; }
+.movie-bg .section-title { color: #fff; }
+.movie-bg .section-desc { color: rgba(255,255,255,.75); }
+.movie-wrap { max-width: 780px; margin: 44px auto 0; }
+.movie-wrap video {
+  display: block; width: 100%; border-radius: 18px;
+  box-shadow: 0 26px 70px rgba(0,0,0,.5);
+  background: #000;
+}
+.movie-note { text-align: center; font-size: 12px; color: rgba(255,255,255,.55); margin-top: 14px; }
+.howto-movie { margin-top: 48px; }
+.howto-movie video {
+  display: block; width: 100%; max-width: 720px; margin: 18px auto 0;
+  border-radius: 16px; box-shadow: 0 16px 44px rgba(62,39,35,.22); background: #000;
+}
+.howto-movie .mv-title { text-align: center; font-size: 15px; font-weight: 700; color: var(--brown-dark); }
 
 /* 動きが苦手な人には静的に */
 @media (prefers-reduced-motion: reduce) {
@@ -365,6 +383,7 @@ html.js .reveal.on {
   <a href="/" class="nav-logo">☕ CoffeeVote</a>
   <div class="nav-links">
     <a href="#what">仕組み</a>
+    <a href="#movie">ムービー</a>
     <a href="#how">使い方</a>
     <a href="#features">機能</a>
     <a href="#journey">Journey</a>
@@ -420,6 +439,20 @@ html.js .reveal.on {
         <h3>残高は次回に繰越</h3>
         <p>使わなかった残高はそのまま次のラウンドへ持ち越し。落選した豆への投票も返金されます。</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Movie -->
+<section id="movie" class="movie-bg">
+  <div class="container" style="text-align:center">
+    <div class="section-label">Movie</div>
+    <h2 class="section-title">30秒で、ぜんぶ伝わる。</h2>
+    <p class="section-desc" style="margin:0 auto">CoffeeVote がどんな体験か、まずは30秒のムービーでどうぞ。</p>
+    <div class="movie-wrap reveal">
+      <video id="cmVideo" src="assets/movie/CoffeeVote_CM.mp4" poster="assets/movie/cm_poster.jpg"
+        muted loop playsinline controls preload="metadata"></video>
+      <div class="movie-note">🔇 自動再生中はミュートです。音声つきで見るには ▶ コントロールから音量をオンに（音声: VOICEVOX ずんだもん）</div>
     </div>
   </div>
 </section>
@@ -701,6 +734,11 @@ html.js .reveal.on {
         <p>最多票の豆を購入。感想は Coffee Journey へ</p>
       </div>
     </div>
+    <div class="howto-movie reveal">
+      <div class="mv-title">📺 動画で見る使い方（90秒）</div>
+      <video src="assets/movie/CoffeeVote_HowTo.mp4" poster="assets/movie/howto_poster.jpg"
+        controls playsinline preload="metadata"></video>
+    </div>
   </div>
 </section>
 
@@ -826,7 +864,7 @@ document.documentElement.classList.add('js');
     dots.forEach((d, k) => d.classList.toggle('act', k === i));
   }
 
-  /* ── 偽QR (イメージ用・実URLなし) ── */
+  /* ── 偽QR (イメージ用・実URLなし)。SVG描画=どの解像度でも崩れない ── */
   (function(){
     const box = document.getElementById('hsQr');
     if (!box) return;
@@ -834,14 +872,14 @@ document.documentElement.classList.add('js');
     const fin = (a,b,i,j) => { const di=i-a, dj=j-b;
       if (di<0||di>6||dj<0||dj>6) return null;
       return di===0||di===6||dj===0||dj===6||(di>=2&&di<=4&&dj>=2&&dj<=4); };
-    let html = '';
+    let rects = '';
     for (let i=0;i<25;i++) for (let j=0;j<25;j++){
       let v = null;
       for (const [a,b] of [[0,0],[0,18],[18,0]]) { const f = fin(a,b,i,j); if (f!==null){ v=f; break; } }
       if (v===null) v = (r()%100) < 46;
-      html += v ? '<i class="b"></i>' : '<i></i>';
+      if (v) rects += `<rect x="${j}" y="${i}" width="1" height="1"/>`;
     }
-    box.innerHTML = html;
+    box.innerHTML = `<svg viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" fill="#111">${rects}</svg>`;
   })();
 
   /* ── rAF ループ (パララックス + シーン進行) ── */
@@ -872,6 +910,15 @@ document.documentElement.classList.add('js');
   addEventListener('resize', onScroll, {passive:true});
   frame();
 
+  /* ── CM動画: 画面に入ったら自動再生(ミュート)・出たら停止 ── */
+  const cm = document.getElementById('cmVideo');
+  if (cm && !reduce) {
+    const vio = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { cm.play().catch(()=>{}); }
+      else { cm.pause(); }
+    }), {threshold: .45});
+    vio.observe(cm);
+  }
 })();
 </script>
 
