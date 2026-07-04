@@ -233,6 +233,130 @@ footer .footer-logo { color: #fff; font-size: 18px; font-weight: 900; margin-bot
 .faq-list summary::after { content: '＋'; color: var(--amber); font-weight: 900; font-size: 18px; flex-shrink:0; }
 .faq-list details[open] summary::after { content: '−'; }
 .faq-list .faq-a { padding: 0 20px 16px; font-size: 13px; color: #5d4037; line-height: 1.75; }
+
+/* ═══════════ Motion layer ═══════════ */
+html { scroll-behavior: smooth; }
+
+/* nav: スクロールでガラス化 */
+nav { transition: background .35s, box-shadow .35s; }
+nav.scrolled { background: rgba(62,39,35,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+
+/* スクロール出現 (JSが .reveal を付与 → 交差で .on) */
+html.js .reveal { opacity: 0; transform: translateY(38px); }
+html.js .reveal.on {
+  opacity: 1; transform: none;
+  transition: opacity .8s cubic-bezier(.22,.75,.3,1), transform .8s cubic-bezier(.22,.75,.3,1);
+  transition-delay: var(--d, 0s);
+}
+
+/* ヒーロー: ロードで立ち上がる */
+.hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+@keyframes riseIn { from { opacity: 0; transform: translateY(46px); } to { opacity: 1; transform: none; } }
+.hero .hero-badge  { animation: riseIn .8s .1s cubic-bezier(.22,.75,.3,1) both; }
+.hero h1           { animation: riseIn .9s .25s cubic-bezier(.22,.75,.3,1) both; }
+.hero .hero-sub    { animation: riseIn .9s .45s cubic-bezier(.22,.75,.3,1) both; }
+.hero .hero-actions{ animation: riseIn .9s .62s cubic-bezier(.22,.75,.3,1) both; }
+.hero-cup { font-size: 74px; line-height:1; margin: 0 auto 6px; position: relative; width: 90px;
+  animation: riseIn .8s 0s both; }
+.hero-cup .steam { position: absolute; left: 50%; bottom: 88%; width: 8px; height: 8px;
+  border-radius: 50%; background: rgba(255,255,255,.5); filter: blur(3px); opacity: 0; }
+@keyframes steamUp {
+  0%   { transform: translate(-50%, 0) scale(.6); opacity: 0; }
+  25%  { opacity: .8; }
+  100% { transform: translate(calc(-50% + var(--sx, 0px)), -74px) scale(1.7); opacity: 0; }
+}
+.hero-cup .steam { animation: steamUp 2.6s infinite ease-out; }
+.hero-cup .steam:nth-child(2) { animation-delay: .9s;  --sx: -12px; }
+.hero-cup .steam:nth-child(3) { animation-delay: 1.7s; --sx: 12px; }
+.scroll-cue { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,.65); font-size: 12px; letter-spacing: 2px; text-align: center;
+  animation: riseIn 1s 1.2s both; }
+.scroll-cue::after { content: '⌄'; display: block; font-size: 26px; line-height: .8;
+  animation: cueBob 1.6s infinite ease-in-out; }
+@keyframes cueBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+/* 浮遊コーヒー豆 (パララックス, JSがtransform制御) */
+.bean-float { position: absolute; pointer-events: none; user-select: none;
+  will-change: transform; z-index: 0; opacity: .16; filter: blur(.3px); }
+.hero, #cost, #journey { position: relative; overflow: hidden; }
+.hero .container, #cost .container, #journey .container { position: relative; z-index: 1; }
+
+/* ═══════════ How-scene (ピン留めスクロール) ═══════════ */
+#how { position: relative; height: 440vh; background: var(--cream); padding: 0; }
+.hs-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; }
+.hs-grid { display: flex; align-items: center; gap: 70px; padding: 0 40px; max-width: 1060px; }
+.hs-text { width: 340px; position: relative; min-height: 240px; }
+.hs-step { position: absolute; inset: 0; opacity: 0; transform: translateY(26px);
+  transition: opacity .45s ease, transform .45s ease; }
+.hs-step.act { opacity: 1; transform: none; }
+.hs-num { width: 62px; height: 62px; border-radius: 50%; background: var(--brown-dark); color: #fff;
+  font-size: 26px; font-weight: 900; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.hs-step h3 { font-size: 34px; font-weight: 900; color: var(--brown-dark); line-height: 1.3; }
+.hs-step p  { font-size: 16px; color: #6d4c41; margin-top: 12px; line-height: 1.8; }
+.hs-label { position: absolute; top: 9vh; left: 50%; transform: translateX(-50%);
+  text-align: center; width: 100%; padding: 0 20px; }
+.hs-dots { position: absolute; bottom: 6vh; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 10px; }
+.hs-dots i { width: 9px; height: 9px; border-radius: 50%; background: #d9c6ac; transition: all .3s; }
+.hs-dots i.act { background: var(--amber); transform: scale(1.35); }
+/* デバイス */
+.hs-device { width: min(520px, 46vw); background: #232323; border-radius: 24px;
+  padding: 18px 18px 8px; box-shadow: 0 34px 80px rgba(62,39,35,.35);
+  will-change: transform; transform-style: preserve-3d; }
+.hs-scr { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 10px;
+  overflow: hidden; background: #101418; }
+.hs-btns { display: flex; justify-content: center; gap: 54px; padding: 9px 0 3px; }
+.hs-btns i { width: 30px; height: 8px; border-radius: 4px; background: #3a3a3a; }
+.hs-screen { position: absolute; inset: 0; display: flex; flex-direction: column;
+  color: #eee; opacity: 0; transform: scale(.96); transition: opacity .45s ease, transform .45s ease; }
+.hs-screen.act { opacity: 1; transform: none; }
+.hs-hd { background: #1b2430; padding: 10px 16px; font-size: 15px; font-weight: 700; color: #ffd54f;
+  display: flex; justify-content: space-between; }
+.hs-hd span:last-child { color: #90caf9; font-size: 12px; }
+.hs-bd { flex: 1; padding: 13px 16px; display: flex; flex-direction: column; gap: 9px; }
+.hs-names { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; flex: 1; }
+.hs-names div { background: #25313d; border-radius: 9px; display: flex; align-items: center;
+  justify-content: center; font-size: 17px; font-weight: 700; color: #e3f2fd; }
+.hs-names .on { background: var(--amber); color: #fff; outline: 3px solid #ffd54f; }
+.hs-bean { background: #1c2630; border-radius: 9px; padding: 8px 13px; }
+.hs-bean .t { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; }
+.hs-bean .t b { color: #ffd54f; }
+.hs-bean .bar { height: 7px; background: #33404d; border-radius: 4px; margin-top: 5px; overflow: hidden; }
+.hs-bean .bar i { display: block; height: 100%; width: 0;
+  background: linear-gradient(90deg, #d7a96b, #ffb300); transition: width 1s cubic-bezier(.22,.75,.3,1); }
+.hs-screen.act .hs-bean .bar i { width: var(--w, 50%); }
+.hs-bean.on { outline: 3px solid #ffd54f; }
+.hs-amt { background: #0d1117; border-radius: 8px; text-align: right; font-size: 30px; font-weight: 900;
+  color: #aef3ae; padding: 5px 14px; }
+.hs-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; flex: 1; margin-top: 4px; }
+.hs-pad div { background: #25313d; border-radius: 7px; display: flex; align-items: center;
+  justify-content: center; font-size: 16px; font-weight: 700; }
+.hs-pad .ok { background: var(--green); color: #fff; }
+.hs-qr { background: #fff; flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 8px; color: #222; }
+.hs-qrbox { display: grid; grid-template-columns: repeat(25, 5.5px); grid-auto-rows: 5.5px; }
+.hs-qrbox i.b { background: #111; }
+.hs-qr .amt { font-size: 19px; font-weight: 900; color: var(--amber); }
+.hs-qr .cap { font-size: 12.5px; font-weight: 700; }
+@media (max-width: 760px) {
+  .hs-grid { flex-direction: column; gap: 22px; padding: 0 22px; }
+  .hs-device { width: min(400px, 88vw); }
+  .hs-text { width: 100%; min-height: 150px; text-align: center; }
+  .hs-num { margin: 0 auto 10px; width: 46px; height: 46px; font-size: 20px; }
+  .hs-step h3 { font-size: 24px; }
+  .hs-step p { font-size: 13.5px; margin-top: 6px; }
+}
+
+/* 動きが苦手な人には静的に */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html.js .reveal { opacity: 1; transform: none; }
+  .hero .hero-badge, .hero h1, .hero .hero-sub, .hero .hero-actions, .hero-cup, .scroll-cue { animation: none; }
+  .hero-cup .steam { animation: none; opacity: 0; }
+  .bean-float { display: none; }
+}
 </style>
 </head>
 <body>
@@ -252,6 +376,7 @@ footer .footer-logo { color: #fff; font-size: 18px; font-weight: 900; margin-bot
 
 <!-- Hero -->
 <section class="hero">
+  <div class="hero-cup"><span class="steam"></span><span class="steam"></span><span class="steam"></span>☕</div>
   <div class="hero-badge">🏢 職場向け · 小規模チームに最適</div>
   <h1>豆から選べる、<br><span>職場のコーヒー体験。</span></h1>
   <p class="hero-sub">
@@ -262,6 +387,7 @@ footer .footer-logo { color: #fff; font-size: 18px; font-weight: 900; margin-bot
     <a href="join.html" class="btn-primary">🎁 参加してみる</a>
     <a href="poster_guide.html" class="btn-secondary">📄 使い方ガイド</a>
   </div>
+  <div class="scroll-cue">SCROLL</div>
 </section>
 
 <!-- What is CoffeeVote -->
@@ -361,34 +487,68 @@ footer .footer-logo { color: #fff; font-size: 18px; font-weight: 900; margin-bot
   </div>
 </section>
 
-<!-- How it works -->
-<section id="how" class="how-bg">
-  <div class="container">
-    <div class="section-label">How it works</div>
-    <h2 class="section-title">4ステップで投票完了。</h2>
-    <p class="section-desc">難しい操作は一切ありません。M5Stack の前に立てば30秒で終わります。</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>名前を選ぶ</h3>
-        <p>VOTE を押して自分の名前をタップ</p>
+<!-- How it works: ピン留めスクロールシーン -->
+<section id="how">
+  <div class="hs-sticky">
+    <div class="hs-label">
+      <div class="section-label">How it works</div>
+      <h2 class="section-title" style="margin-bottom:0">4ステップで投票完了。</h2>
+    </div>
+    <div class="hs-grid">
+      <div class="hs-text">
+        <div class="hs-step act" data-i="0">
+          <div class="hs-num">1</div>
+          <h3>名前を選ぶ</h3>
+          <p>卓上の M5Stack で「投票する」をタップして、自分の名前を選びます。</p>
+        </div>
+        <div class="hs-step" data-i="1">
+          <div class="hs-num">2</div>
+          <h3>豆を選ぶ</h3>
+          <p>今回の候補から気になる一品を。集まり具合もひと目でわかります。</p>
+        </div>
+        <div class="hs-step" data-i="2">
+          <div class="hs-num">3</div>
+          <h3>金額を入力</h3>
+          <p>応援したい金額を1円単位で。少額からでもOKです。</p>
+        </div>
+        <div class="hs-step" data-i="3">
+          <div class="hs-num">4</div>
+          <h3>QRで支払い</h3>
+          <p>画面のQRをPayPayでスキャンすれば、投票完了！</p>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>豆を選ぶ</h3>
-        <p>今回の候補豆から気になる一品を選択</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>金額を入力</h3>
-        <p>PayPay で払う金額（1円単位）を入力</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3>QR で支払い</h3>
-        <p>画面のQRをスキャン → 投票完了！</p>
+      <div class="hs-device" id="hsDevice">
+        <div class="hs-scr">
+          <div class="hs-screen act" data-i="0">
+            <div class="hs-hd"><span>投票する人は？</span><span>1/2</span></div>
+            <div class="hs-bd"><div class="hs-names">
+              <div class="on">なかせ</div><div>たなか</div><div>さとう</div>
+              <div>やまだ</div><div>すずき</div><div>いとう</div>
+            </div></div>
+          </div>
+          <div class="hs-screen" data-i="1">
+            <div class="hs-hd"><span>今回の候補豆</span><span>タップで選択</span></div>
+            <div class="hs-bd">
+              <div class="hs-bean on"><div class="t"><span>エチオピア イルガチェフェ</span><b>¥3,300</b></div><div class="bar"><i style="--w:68%"></i></div></div>
+              <div class="hs-bean"><div class="t"><span>コロンビア スプレモ</span><b>¥3,500</b></div><div class="bar"><i style="--w:45%"></i></div></div>
+              <div class="hs-bean"><div class="t"><span>グアテマラ アンティグア</span><b>¥3,900</b></div><div class="bar"><i style="--w:30%"></i></div></div>
+            </div>
+          </div>
+          <div class="hs-screen" data-i="2">
+            <div class="hs-hd"><span>投票金額を入力</span><span>1円単位OK</span></div>
+            <div class="hs-bd"><div class="hs-amt">¥300</div>
+            <div class="hs-pad"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>C</div><div>0</div><div class="ok">OK</div></div></div>
+          </div>
+          <div class="hs-screen" data-i="3">
+            <div class="hs-hd"><span>PayPayで支払い</span><span>スキャンしてね</span></div>
+            <div class="hs-qr"><div class="hs-qrbox" id="hsQr"></div>
+            <div class="amt">¥300</div><div class="cap">📱 QRを読み取って支払うと投票完了</div></div>
+          </div>
+        </div>
+        <div class="hs-btns"><i></i><i></i><i></i></div>
       </div>
     </div>
+    <div class="hs-dots"><i class="act"></i><i></i><i></i><i></i></div>
   </div>
 </section>
 
@@ -603,6 +763,117 @@ footer .footer-logo { color: #fff; font-size: 18px; font-weight: 900; margin-bot
     </div>
   </div>
 </section>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── nav ガラス化 ── */
+  const nav = document.querySelector('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+  /* ── スクロール出現 (自動タグ付け+stagger) ── */
+  const groups = ['.what-grid', '.features-grid', '.hw-grid', '.phone-shots',
+                  '.journey-points', '.steps', '.faq-list'];
+  groups.forEach(sel => document.querySelectorAll(sel).forEach(g => {
+    [...g.children].forEach((el, i) => { el.classList.add('reveal'); el.style.setProperty('--d', (i*0.09)+'s'); });
+  }));
+  document.querySelectorAll('.section-label, .section-title, .section-desc, .bonus-card')
+    .forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+  }), {threshold: .12, rootMargin: '0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── 浮遊コーヒー豆パララックス ── */
+  const beanHosts = [
+    {sel: '.hero',    n: 7, min: 20, max: 46},
+    {sel: '#cost',    n: 5, min: 18, max: 36},
+    {sel: '#journey', n: 5, min: 18, max: 36},
+  ];
+  const beans = [];
+  if (!reduce) {
+    let seed = 12;
+    const rnd = () => (seed = (seed*1103515245+12345) % 2147483648) / 2147483648;
+    beanHosts.forEach(h => {
+      const host = document.querySelector(h.sel);
+      if (!host) return;
+      for (let i = 0; i < h.n; i++) {
+        const b = document.createElement('span');
+        b.className = 'bean-float';
+        b.textContent = ['🫘','☕','🫘','🌱'][Math.floor(rnd()*4)];
+        b.style.fontSize = (h.min + rnd()*(h.max-h.min)) + 'px';
+        b.style.left = (4 + rnd()*90) + '%';
+        b.style.top  = (6 + rnd()*84) + '%';
+        host.appendChild(b);
+        beans.push({el: b, host, speed: .06 + rnd()*.22, rot: (rnd()-.5)*60, ph: rnd()*6.28});
+      }
+    });
+  }
+
+  /* ── How-scene: スクロールでデバイスが動き画面が切替 ── */
+  const scene  = document.getElementById('how');
+  const device = document.getElementById('hsDevice');
+  const screens = [...document.querySelectorAll('.hs-screen')];
+  const steps   = [...document.querySelectorAll('.hs-step')];
+  const dots    = [...document.querySelectorAll('.hs-dots i')];
+  let cur = 0;
+  function setStep(i){
+    if (i === cur) return; cur = i;
+    screens.forEach(s => s.classList.toggle('act', +s.dataset.i === i));
+    steps.forEach(s => s.classList.toggle('act', +s.dataset.i === i));
+    dots.forEach((d, k) => d.classList.toggle('act', k === i));
+  }
+
+  /* ── 偽QR (イメージ用・実URLなし) ── */
+  (function(){
+    const box = document.getElementById('hsQr');
+    if (!box) return;
+    let s = 7; const r = () => (s = (s*1103515245+12345) % 2147483648);
+    const fin = (a,b,i,j) => { const di=i-a, dj=j-b;
+      if (di<0||di>6||dj<0||dj>6) return null;
+      return di===0||di===6||dj===0||dj===6||(di>=2&&di<=4&&dj>=2&&dj<=4); };
+    let html = '';
+    for (let i=0;i<25;i++) for (let j=0;j<25;j++){
+      let v = null;
+      for (const [a,b] of [[0,0],[0,18],[18,0]]) { const f = fin(a,b,i,j); if (f!==null){ v=f; break; } }
+      if (v===null) v = (r()%100) < 46;
+      html += v ? '<i class="b"></i>' : '<i></i>';
+    }
+    box.innerHTML = html;
+  })();
+
+  /* ── rAF ループ (パララックス + シーン進行) ── */
+  let ticking = false;
+  function frame(){
+    ticking = false;
+    // beans
+    for (const b of beans) {
+      const r = b.host.getBoundingClientRect();
+      const y = -r.top * b.speed;
+      b.el.style.transform = `translateY(${y}px) rotate(${b.rot + y*.2}deg)`;
+    }
+    // how-scene
+    if (scene) {
+      const r = scene.getBoundingClientRect();
+      const total = r.height - innerHeight;
+      const p = Math.min(1, Math.max(0, -r.top / total));      // 0..1
+      setStep(Math.min(3, Math.floor(p * 4)));
+      if (device && !reduce) {
+        const ry = (p - .5) * 16;                               // ゆっくり回転
+        const ty = Math.sin(p * Math.PI) * -14;                 // ふわっと浮く
+        device.style.transform = `perspective(1100px) rotateY(${ry}deg) translateY(${ty}px)`;
+      }
+    }
+  }
+  function onScroll(){ if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', onScroll, {passive:true});
+  frame();
+
+})();
+</script>
 
 <footer>
   <div class="footer-logo">☕ CoffeeVote</div>
