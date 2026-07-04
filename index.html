@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CoffeeVote — みんなで選ぶコーヒー豆</title>
-<meta name="description" content="職場でコーヒー豆をみんなで投票して選ぶ、小規模チーム向け共同購入システム。M5Stack + PayPay で動く手作りツールです。">
+<meta name="description" content="職場でコーヒー豆をみんなで投票して選ぶ、小規模チーム向け共同購入システム。卓上の小型デバイスと PayPay で動く手作りツールです。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -281,37 +281,41 @@ html.js .reveal.on {
 .hero, #cost, #journey { position: relative; overflow: hidden; }
 .hero .container, #cost .container, #journey .container { position: relative; z-index: 1; }
 
-/* ═══════════ How-scene (ピン留めスクロール) ═══════════ */
-#how { position: relative; height: 440vh; background: var(--cream); padding: 0; }
-.hs-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden;
-  display: flex; align-items: center; justify-content: center; }
-.hs-grid { display: flex; align-items: center; gap: 70px; padding: 0 40px; max-width: 1060px; }
-.hs-text { width: 340px; position: relative; min-height: 240px; }
-.hs-step { position: absolute; inset: 0; opacity: 0; transform: translateY(26px);
-  transition: opacity .45s ease, transform .45s ease; }
-.hs-step.act { opacity: 1; transform: none; }
-.hs-num { width: 62px; height: 62px; border-radius: 50%; background: var(--brown-dark); color: #fff;
-  font-size: 26px; font-weight: 900; display: flex; align-items: center; justify-content: center;
-  margin-bottom: 18px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
-.hs-step h3 { font-size: 34px; font-weight: 900; color: var(--brown-dark); line-height: 1.3; }
-.hs-step p  { font-size: 16px; color: #6d4c41; margin-top: 12px; line-height: 1.8; }
-.hs-label { position: absolute; top: calc(56px + 3.5vh); left: 50%; transform: translateX(-50%);
-  text-align: center; width: 100%; padding: 0 20px; }
-.hs-dots { position: absolute; bottom: 6vh; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 10px; }
+/* ═══════════ How-carousel (この部分だけ横スワイプ・Apple風) ═══════════ */
+#how { background: var(--cream); }
+.hcar { position: relative; max-width: 980px; margin: 40px auto 0; }
+.hcar-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 6px 2px; }
+.hcar-track::-webkit-scrollbar { display: none; }
+.hslide { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always;
+  display: flex; align-items: center; justify-content: center; gap: 48px;
+  background: #fff; border-radius: 22px; padding: 36px 30px;
+  box-shadow: 0 10px 30px rgba(62,39,35,.08); }
+.hs-text { width: 300px; flex-shrink: 0; }
+.hs-num { width: 56px; height: 56px; border-radius: 50%; background: var(--brown-dark); color: #fff;
+  font-size: 24px; font-weight: 900; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.hs-text h3 { font-size: 30px; font-weight: 900; color: var(--brown-dark); line-height: 1.3; }
+.hs-text p  { font-size: 14.5px; color: #6d4c41; margin-top: 10px; line-height: 1.8; }
+.hcar-foot { position: relative; display: flex; align-items: center; justify-content: center;
+  margin-top: 16px; min-height: 42px; }
+.hs-dots { display: flex; gap: 9px; }
 .hs-dots i { width: 9px; height: 9px; border-radius: 50%; background: #d9c6ac; transition: all .3s; }
 .hs-dots i.act { background: var(--amber); transform: scale(1.35); }
+.hcar-nav { position: absolute; right: 0; top: 0; display: flex; gap: 10px; }
+.hcar-btn { width: 42px; height: 42px; border-radius: 50%; border: none; background: #fff;
+  color: var(--brown-dark); font-size: 22px; font-weight: 900; line-height: 1; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(62,39,35,.18); transition: opacity .2s, transform .15s; }
+.hcar-btn:hover { transform: scale(1.08); }
+.hcar-btn:disabled { opacity: .3; cursor: default; transform: none; }
 /* デバイス */
-.hs-device { width: min(520px, 46vw); background: #232323; border-radius: 24px;
-  padding: 18px 18px 8px; box-shadow: 0 34px 80px rgba(62,39,35,.35);
-  will-change: transform; transform-style: preserve-3d; }
-.hs-scr { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 10px;
+.hs-device { width: min(440px, 44vw); background: #232323; border-radius: 20px;
+  padding: 14px 14px 6px; box-shadow: 0 18px 44px rgba(62,39,35,.25); }
+.hs-scr { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 9px;
   overflow: hidden; background: #101418; }
 .hs-btns { display: flex; justify-content: center; gap: 54px; padding: 9px 0 3px; }
 .hs-btns i { width: 30px; height: 8px; border-radius: 4px; background: #3a3a3a; }
-.hs-screen { position: absolute; inset: 0; display: flex; flex-direction: column;
-  color: #eee; opacity: 0; transform: scale(.96); transition: opacity .45s ease, transform .45s ease; }
-.hs-screen.act { opacity: 1; transform: none; }
+.hs-screen { position: absolute; inset: 0; display: flex; flex-direction: column; color: #eee; }
 .hs-hd { background: #1b2430; padding: 10px 16px; font-size: 15px; font-weight: 700; color: #ffd54f;
   display: flex; justify-content: space-between; }
 .hs-hd span:last-child { color: #90caf9; font-size: 12px; }
@@ -324,9 +328,8 @@ html.js .reveal.on {
 .hs-bean .t { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; }
 .hs-bean .t b { color: #ffd54f; }
 .hs-bean .bar { height: 7px; background: #33404d; border-radius: 4px; margin-top: 5px; overflow: hidden; }
-.hs-bean .bar i { display: block; height: 100%; width: 0;
-  background: linear-gradient(90deg, #d7a96b, #ffb300); transition: width 1s cubic-bezier(.22,.75,.3,1); }
-.hs-screen.act .hs-bean .bar i { width: var(--w, 50%); }
+.hs-bean .bar i { display: block; height: 100%; width: var(--w, 50%);
+  background: linear-gradient(90deg, #d7a96b, #ffb300); }
 .hs-bean.on { outline: 3px solid #ffd54f; }
 .hs-amt { background: #0d1117; border-radius: 8px; text-align: right; font-size: 30px; font-weight: 900;
   color: #aef3ae; padding: 5px 14px; }
@@ -341,12 +344,12 @@ html.js .reveal.on {
 .hs-qr .amt { font-size: 18px; font-weight: 900; color: var(--amber); }
 .hs-qr .cap { font-size: 12px; font-weight: 700; text-align: center; }
 @media (max-width: 760px) {
-  .hs-grid { flex-direction: column; gap: 22px; padding: 0 22px; }
-  .hs-device { width: min(400px, 88vw); }
-  .hs-text { width: 100%; min-height: 150px; text-align: center; }
-  .hs-num { margin: 0 auto 10px; width: 46px; height: 46px; font-size: 20px; }
-  .hs-step h3 { font-size: 24px; }
-  .hs-step p { font-size: 13.5px; margin-top: 6px; }
+  .hslide { flex-direction: column; gap: 16px; padding: 22px 14px; }
+  .hs-device { width: min(400px, 82vw); }
+  .hs-text { width: 100%; text-align: center; }
+  .hs-num { margin: 0 auto 8px; width: 44px; height: 44px; font-size: 19px; }
+  .hs-text h3 { font-size: 22px; }
+  .hs-text p { font-size: 13px; margin-top: 6px; }
 }
 
 /* ═══════════ Movie ═══════════ */
@@ -427,7 +430,7 @@ html.js .reveal.on {
       <div class="what-card">
         <div class="icon">📱</div>
         <h3>PayPay でその場で決済</h3>
-        <p>M5Stack の画面にQRコードが表示されます。スキャンするだけで投票完了。</p>
+        <p>卓上デバイスの画面にQRコードが表示されます。スキャンするだけで投票完了。</p>
       </div>
       <div class="what-card">
         <div class="icon">🎯</div>
@@ -447,8 +450,8 @@ html.js .reveal.on {
 <section id="movie" class="movie-bg">
   <div class="container" style="text-align:center">
     <div class="section-label">Movie</div>
-    <h2 class="section-title">30秒で、ぜんぶ伝わる。</h2>
-    <p class="section-desc" style="margin:0 auto">CoffeeVote がどんな体験か、まずは30秒のムービーでどうぞ。</p>
+    <h2 class="section-title">コーヒータイムが、ちょっと楽しみになる。</h2>
+    <p class="section-desc" style="margin:0 auto">CoffeeVote のある一日を、30秒のムービーでのぞいてみてください。</p>
     <div class="movie-wrap reveal">
       <video id="cmVideo" src="assets/movie/CoffeeVote_CM.mp4" poster="assets/movie/cm_poster.jpg"
         muted loop playsinline controls preload="metadata"></video>
@@ -520,68 +523,76 @@ html.js .reveal.on {
   </div>
 </section>
 
-<!-- How it works: ピン留めスクロールシーン -->
+<!-- How it works: 横スワイプカルーセル -->
 <section id="how">
-  <div class="hs-sticky">
-    <div class="hs-label">
-      <div class="section-label">How it works</div>
-      <h2 class="section-title" style="margin-bottom:0">4ステップで投票完了。</h2>
-    </div>
-    <div class="hs-grid">
-      <div class="hs-text">
-        <div class="hs-step act" data-i="0">
-          <div class="hs-num">1</div>
-          <h3>名前を選ぶ</h3>
-          <p>卓上の M5Stack で「投票する」をタップして、自分の名前を選びます。</p>
-        </div>
-        <div class="hs-step" data-i="1">
-          <div class="hs-num">2</div>
-          <h3>豆を選ぶ</h3>
-          <p>今回の候補から気になる一品を。集まり具合もひと目でわかります。</p>
-        </div>
-        <div class="hs-step" data-i="2">
-          <div class="hs-num">3</div>
-          <h3>金額を入力</h3>
-          <p>応援したい金額を1円単位で。少額からでもOKです。</p>
-        </div>
-        <div class="hs-step" data-i="3">
-          <div class="hs-num">4</div>
-          <h3>QRで支払い</h3>
-          <p>画面のQRをPayPayでスキャンすれば、投票完了！</p>
-        </div>
-      </div>
-      <div class="hs-device" id="hsDevice">
-        <div class="hs-scr">
-          <div class="hs-screen act" data-i="0">
+  <div class="container">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">4ステップで投票完了。</h2>
+    <p class="section-desc">むずかしい操作はありません。矢印かスワイプでステップをめくれます。</p>
+    <div class="hcar">
+      <div class="hcar-track" id="hcarTrack">
+        <div class="hslide">
+          <div class="hs-text">
+            <div class="hs-num">1</div>
+            <h3>名前を選ぶ</h3>
+            <p>卓上のデバイスで「投票する」をタップして、自分の名前を選びます。</p>
+          </div>
+          <div class="hs-device"><div class="hs-scr"><div class="hs-screen">
             <div class="hs-hd"><span>投票する人は？</span><span>1/2</span></div>
             <div class="hs-bd"><div class="hs-names">
               <div class="on">なかせ</div><div>たなか</div><div>さとう</div>
               <div>やまだ</div><div>すずき</div><div>いとう</div>
             </div></div>
+          </div></div><div class="hs-btns"><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="hslide">
+          <div class="hs-text">
+            <div class="hs-num">2</div>
+            <h3>豆を選ぶ</h3>
+            <p>今回の候補から気になる一品を。集まり具合もひと目でわかります。</p>
           </div>
-          <div class="hs-screen" data-i="1">
+          <div class="hs-device"><div class="hs-scr"><div class="hs-screen">
             <div class="hs-hd"><span>今回の候補豆</span><span>タップで選択</span></div>
             <div class="hs-bd">
               <div class="hs-bean on"><div class="t"><span>エチオピア イルガチェフェ</span><b>¥3,300</b></div><div class="bar"><i style="--w:68%"></i></div></div>
               <div class="hs-bean"><div class="t"><span>コロンビア スプレモ</span><b>¥3,500</b></div><div class="bar"><i style="--w:45%"></i></div></div>
               <div class="hs-bean"><div class="t"><span>グアテマラ アンティグア</span><b>¥3,900</b></div><div class="bar"><i style="--w:30%"></i></div></div>
             </div>
+          </div></div><div class="hs-btns"><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="hslide">
+          <div class="hs-text">
+            <div class="hs-num">3</div>
+            <h3>金額を入力</h3>
+            <p>応援したい金額を100円単位で。100円からでもOKです。</p>
           </div>
-          <div class="hs-screen" data-i="2">
-            <div class="hs-hd"><span>投票金額を入力</span><span>1円単位OK</span></div>
+          <div class="hs-device"><div class="hs-scr"><div class="hs-screen">
+            <div class="hs-hd"><span>投票金額を入力</span><span>100円単位</span></div>
             <div class="hs-bd"><div class="hs-amt">¥300</div>
             <div class="hs-pad"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>C</div><div>0</div><div class="ok">OK</div></div></div>
+          </div></div><div class="hs-btns"><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="hslide">
+          <div class="hs-text">
+            <div class="hs-num">4</div>
+            <h3>QRで支払い</h3>
+            <p>画面のQRをPayPayでスキャンすれば、投票完了！</p>
           </div>
-          <div class="hs-screen" data-i="3">
+          <div class="hs-device"><div class="hs-scr"><div class="hs-screen">
             <div class="hs-hd"><span>PayPayで支払い</span><span>スキャンしてね</span></div>
             <div class="hs-qr"><div class="hs-qrbox" id="hsQr"></div>
             <div class="amt">¥300</div><div class="cap">📱 QRを読み取って支払うと投票完了</div></div>
-          </div>
+          </div></div><div class="hs-btns"><i></i><i></i><i></i></div></div>
         </div>
-        <div class="hs-btns"><i></i><i></i><i></i></div>
+      </div>
+      <div class="hcar-foot">
+        <div class="hs-dots" id="hsDots"><i class="act"></i><i></i><i></i><i></i></div>
+        <div class="hcar-nav">
+          <button class="hcar-btn" id="hcPrev" aria-label="前のステップ">‹</button>
+          <button class="hcar-btn" id="hcNext" aria-label="次のステップ">›</button>
+        </div>
       </div>
     </div>
-    <div class="hs-dots"><i class="act"></i><i></i><i></i><i></i></div>
   </div>
 </section>
 
@@ -612,9 +623,9 @@ html.js .reveal.on {
         <p>投票履歴・ポイント残高・精算データを自動出力</p>
       </div>
       <div class="feature-item">
-        <div class="feature-icon">🌐</div>
-        <h3>Wi-Fi なしでも動く</h3>
-        <p>オフライン完全動作。Wi-Fi があれば NTP 時刻同期も</p>
+        <div class="feature-icon">🔄</div>
+        <h3>リアルタイム同期</h3>
+        <p>投票やポイントは自動で記録・同期。集計の手間はありません</p>
       </div>
       <div class="feature-item">
         <div class="feature-icon">↩️</div>
@@ -669,7 +680,7 @@ html.js .reveal.on {
     </div>
 
     <p class="section-desc" style="margin:36px auto 0;text-align:center">
-      職場のポスターや卓上の M5Stack に表示される QR を、スマホのカメラで読み取るだけ。<br>
+      職場のポスターや卓上デバイスに表示される QR を、スマホのカメラで読み取るだけ。<br>
       アプリのインストールは不要です。
     </p>
   </div>
@@ -679,18 +690,18 @@ html.js .reveal.on {
 <section id="hardware" class="hw-bg">
   <div class="container">
     <div class="section-label">Hardware</div>
-    <h2 class="section-title">M5Stack で動く物理デバイス。</h2>
+    <h2 class="section-title">卓上の小型デバイスで、さっと投票。</h2>
     <p class="section-desc">スマホアプリじゃなく、専用デバイスが卓上に置いてあるのが CoffeeVote らしさです。</p>
     <div class="hw-grid">
       <div class="hw-card">
         <div class="icon">📦</div>
-        <h3>M5Stack Core2</h3>
-        <p>タッチスクリーン付きの小型デバイス。卓上に置いておけばいつでも投票できます。PlatformIO (Arduino C++) で実装。</p>
+        <h3>タッチスクリーン付き小型デバイス</h3>
+        <p>コーヒーコーナーに置いておけば、いつでもワンタップで投票できます。</p>
       </div>
       <div class="hw-card">
         <div class="icon">💾</div>
-        <h3>microSD で完結</h3>
-        <p>設定・投票履歴・ポイント残高はすべて SD カードに保存。クラウド不要、個人情報の外部送信なし。</p>
+        <h3>データはチーム内だけ</h3>
+        <p>投票履歴やポイント残高はチームの環境内だけで管理。外部サービスへの個人情報送信はありません。</p>
       </div>
       <div class="hw-card">
         <div class="icon">📱</div>
@@ -699,8 +710,8 @@ html.js .reveal.on {
       </div>
       <div class="hw-card">
         <div class="icon">🔧</div>
-        <h3>オープンソース</h3>
-        <p>ファームウェアから管理ダッシュボードまで GitHub で公開。自分のチーム用にカスタマイズできます。</p>
+        <h3>チームに合わせて調整</h3>
+        <p>候補の豆やラウンドのルールは、管理者がかんたんに設定・調整できます。</p>
       </div>
     </div>
   </div>
@@ -711,12 +722,12 @@ html.js .reveal.on {
   <div class="container">
     <div class="section-label">Getting started</div>
     <h2 class="section-title">はじめかたは、かんたん。</h2>
-    <p class="section-desc">M5Stack が1台あれば始められます。ソフトは GitHub で公開しています。</p>
+    <p class="section-desc">参加する人の準備は PayPay だけ。デバイスの設置や設定は管理者が行います。</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>デバイスを用意</h3>
-        <p>M5Stack Core2 と microSD カードを準備</p>
+        <h3>デバイスを設置</h3>
+        <p>タッチスクリーン付きの小型デバイスを卓上に</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -771,7 +782,7 @@ html.js .reveal.on {
       </details>
       <details>
         <summary>お金や個人情報は安全？</summary>
-        <div class="faq-a">設定・投票履歴・残高はすべて手元の SD カード（またはローカル環境）に保存します。クラウドに個人情報を送信することはありません。</div>
+        <div class="faq-a">投票履歴や残高はチームの環境内だけで管理し、外部のサービスに個人情報を送ることはありません。</div>
       </details>
       <details>
         <summary>間違えて投票したら？</summary>
@@ -779,7 +790,7 @@ html.js .reveal.on {
       </details>
       <details>
         <summary>Wi-Fi は必要？</summary>
-        <div class="faq-a">なくても投票は動きます。Wi-Fi があれば NTP による時刻同期などが有効になります。</div>
+        <div class="faq-a">はい、デバイスは職場のネットワークにつないで使います。接続まわりの設定は管理者が行うので、参加する人は気にしなくて大丈夫です。</div>
       </details>
     </div>
   </div>
@@ -850,18 +861,29 @@ document.documentElement.classList.add('js');
     });
   }
 
-  /* ── How-scene: スクロールでデバイスが動き画面が切替 ── */
-  const scene  = document.getElementById('how');
-  const device = document.getElementById('hsDevice');
-  const screens = [...document.querySelectorAll('.hs-screen')];
-  const steps   = [...document.querySelectorAll('.hs-step')];
-  const dots    = [...document.querySelectorAll('.hs-dots i')];
-  let cur = 0;
-  function setStep(i){
-    if (i === cur) return; cur = i;
-    screens.forEach(s => s.classList.toggle('act', +s.dataset.i === i));
-    steps.forEach(s => s.classList.toggle('act', +s.dataset.i === i));
-    dots.forEach((d, k) => d.classList.toggle('act', k === i));
+  /* ── How: 横スワイプカルーセル（縦スクロールは奪わない） ── */
+  const track = document.getElementById('hcarTrack');
+  if (track) {
+    const dots = [...document.querySelectorAll('#hsDots i')];
+    const prev = document.getElementById('hcPrev');
+    const next = document.getElementById('hcNext');
+    const GAP = 20, LAST = 3;
+    const step = () => track.clientWidth + GAP;
+    const idx  = () => Math.max(0, Math.min(LAST, Math.round(track.scrollLeft / step())));
+    const go = i => track.scrollTo({
+      left: Math.max(0, Math.min(LAST, i)) * step(),
+      behavior: reduce ? 'auto' : 'smooth'
+    });
+    prev.addEventListener('click', () => go(idx() - 1));
+    next.addEventListener('click', () => go(idx() + 1));
+    const sync = () => {
+      const i = idx();
+      dots.forEach((d, k) => d.classList.toggle('act', k === i));
+      prev.disabled = i <= 0;
+      next.disabled = i >= LAST;
+    };
+    track.addEventListener('scroll', () => requestAnimationFrame(sync), {passive: true});
+    sync();
   }
 
   /* ── 偽QR (イメージ用・実URLなし)。SVG描画=どの解像度でも崩れない ── */
@@ -891,18 +913,6 @@ document.documentElement.classList.add('js');
       const r = b.host.getBoundingClientRect();
       const y = -r.top * b.speed;
       b.el.style.transform = `translateY(${y}px) rotate(${b.rot + y*.2}deg)`;
-    }
-    // how-scene
-    if (scene) {
-      const r = scene.getBoundingClientRect();
-      const total = r.height - innerHeight;
-      const p = Math.min(1, Math.max(0, -r.top / total));      // 0..1
-      setStep(Math.min(3, Math.floor(p * 4)));
-      if (device && !reduce) {
-        const ry = (p - .5) * 16;                               // ゆっくり回転
-        const ty = Math.sin(p * Math.PI) * -14;                 // ふわっと浮く
-        device.style.transform = `perspective(1100px) rotateY(${ry}deg) translateY(${ty}px)`;
-      }
     }
   }
   function onScroll(){ if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
