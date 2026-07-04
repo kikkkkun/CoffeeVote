@@ -7,6 +7,21 @@
 <meta name="description" content="職場でコーヒー豆をみんなで投票して選ぶ、小規模チーム向け共同購入システム。卓上の小型デバイスと PayPay で動く手作りツールです。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<script>
+/* 必ずページ先頭から表示する:
+   ①ブラウザのスクロール位置復元をオフ ②URLに残った#アンカーを除去(パース前なのでジャンプ自体が起きない)
+   ③bfcache(戻る/進む)復帰時も先頭へ */
+history.scrollRestoration = 'manual';
+if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+(function(){
+  function toTop(){
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(function(){ document.documentElement.style.scrollBehavior = ''; });
+  }
+  addEventListener('pageshow', toTop);   // 通常ロードも bfcache 復帰も発火
+})();
+</script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
